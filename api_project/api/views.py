@@ -15,11 +15,13 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from .models import Book
 from .serializers import BookSerializer
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 class BookViewSet(viewsets.ModelViewSet):
     #def list(self,request):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+    permission_classes = [IsAuthenticated]
         #return Response(serializer_class.data)
     def retrieve(self,request,pk=None):
         books = Book.objects.filter(pk=pk).first()
