@@ -11,11 +11,11 @@
        # serializer_class = BookSerializer(queryset, many=True)
         #return Response(serializer_class.data)
     
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from rest_framework.response import Response
 from .models import Book
-from .serializers import BookSerializer
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from .seriealizers import BookSerializer
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 
 class BookViewSet(viewsets.ModelViewSet):
     #def list(self,request):
@@ -35,6 +35,36 @@ class BookViewSet(viewsets.ModelViewSet):
         serializer_class = BookSerializer(queryset)
         return Response(serializer_class.data)
 
+class BookListView(generics.ListAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [AllowAny]
+
+class BookDetailView(generics.RetrieveAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [AllowAny]
+
+class BookCreateView(generics.CreateAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [IsAuthenticated]
+
+    def createView(self, serializer):
+        serializer.save()
+
+class BookUpdateView(generics.UpdateAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [IsAuthenticated]
+
+    def updateView(self, serializer):
+        serializer.save()
+
+class BookDeleteView(generics.DeleteAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [IsAuthenticated]
 
     
 
