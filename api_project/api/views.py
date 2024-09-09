@@ -35,33 +35,33 @@ class BookViewSet(viewsets.ModelViewSet):
         serializer_class = BookSerializer(queryset)
         return Response(serializer_class.data)
 
-class BookListView(generics.ListAPIView):
+class ListView(generics.ListAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [AllowAny]
 
-class BookDetailView(generics.RetrieveAPIView):
+class DetailView(generics.RetrieveAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [AllowAny]
 
-class BookCreateView(generics.CreateAPIView):
+class CreateView(generics.CreateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [IsAuthenticated]
 
-    def createView(self, serializer):
+    def createViews(self, serializer):
         serializer.save()
 
-class BookUpdateView(generics.UpdateAPIView):
+class UpdateView(generics.UpdateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [IsAuthenticated]
 
-    def updateView(self, serializer):
+    def updateViews(self, serializer):
         serializer.save()
 
-class BookDeleteView(generics.DeleteAPIView):
+class DeleteView(generics.DeleteAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [IsAuthenticated]
