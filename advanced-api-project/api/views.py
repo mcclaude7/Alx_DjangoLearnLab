@@ -13,8 +13,8 @@ class ListView(generics.ListAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_fields =['title','author_name','publication_year']
-    search_fields = ['title','author_name']
-    Ordering_Fields = ['title', 'publication_year']
+    SearchFilter = ['title','author_name']
+    OrderingFilter = ['title', 'publication_year']
     ordering = ['title']
 
 class DetailView(generics.RetrieveAPIView):
