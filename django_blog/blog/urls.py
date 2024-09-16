@@ -1,17 +1,12 @@
+# blog/urls.py
+
 from django.urls import path
-from .views import index, register, LoginView, profile
-from django.contrib.auth.views import LogoutView
-from django.conf import settings
-from django.conf.urls.static import static
-
-#urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
+from .views import register_view, profile_view, logout_view
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    path("",index, name= "index"),
-    path("register", register, name= "register"),
-    path("login", LoginView.as_view(next_page = "profile"), name='login'),
-    path("profile", profile, name="profile"),
-    path("logout", LogoutView.as_view(next_page =  "/"), name='logout'),
-
-] 
+    path('register/', register_view, name='register'),
+    path('profile/', profile_view, name='profile'),
+    path('logout/', logout_view, name='logout'),
+    path('login/', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
+]
