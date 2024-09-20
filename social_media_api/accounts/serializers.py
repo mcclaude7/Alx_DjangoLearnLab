@@ -1,4 +1,4 @@
-# accounts/serializers.py
+
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from django.contrib.auth.password_validation import validate_password
@@ -20,21 +20,23 @@ class RegisterSerializer(serializers.ModelSerializer):
         return attrs
 
     def create(self, validated_data):
-        # Remove the password2 key since it's not needed for user creation
+        # Remove the password2 field as it's not required for the user creation
         validated_data.pop('password2')
 
-        # Create the user using the manager's `create_user` method
+        # Use the model manager to create a new user
         user = User.objects.create_user(
             username=validated_data['username'],
             email=validated_data['email'],
-            password=validated_data['password'],
+            password=validated_data['password'],  # create_user handles password hashing
             bio=validated_data.get('bio', ''),
             profile_picture=validated_data.get('profile_picture')
         )
-        # Create token for the new user
+
+        # Create a token for the new user
         Token.objects.create(user=user)
         return user
 
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField(write_only=True)
+
